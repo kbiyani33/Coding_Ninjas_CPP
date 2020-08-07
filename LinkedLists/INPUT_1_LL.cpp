@@ -57,3 +57,10 @@ int main(){
     Node *head = create_nodes();
     print(head);
 }
+/*What's the time complexity of this input function??
+
+We have an outer while loop, in which if we already have n numbers to be inputted.
+When we have the first value inputted which becomes the head, we get constant time, For second, we get 1 iteration, For 3rd, we get 2 iterations,and so on,
+For nth we get n-1 iterations. Thus, O(n)=1+2+3+...+n-1=O(n^2)
+Not Good
+*/
