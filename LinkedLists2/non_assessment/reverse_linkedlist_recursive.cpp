@@ -36,7 +36,8 @@ class Pair{
 If we ever want to return multiple values, return object of the class with al the values.
 So, the new function I have to make is such that it returns the pair object
 
-//This will have Time Complexity 0(n)
+//Time Complexity  O(n)
+//Space Complexity O(n)
 */
 
 Pair reverse_better(node *head){
@@ -63,7 +64,36 @@ node* reverse_linked_list_rec(node* head){
     return reverse_better(head).head;
 }
 
+//ALGORITHM 3 - To prove why we are really stupid xD.
+//Time Complexity O(n)
+//Space Complexity O(1)
+/*
 
+Consider the linked list, 1 -> 2 -> 3 -> 4 -> 5 -> NULL
+head = &1
+when we call the recursive function on head -> next , we get smallans = 5 and the returned linked list is:
+5 -> 4 -> 3 -> 2 -> NULL
+We have been trying to simply get the tail of returned linked list and then attach the passed head to this tail.
+But in the original list, the head is 1 and the recursively returned linked list is having tail 2
+Isn't tail of returned list, still connected to the head of input list, i.e. 1?
+so we can maike the next of head as the tail and attach the head to that tail
+node *tail = head -> next
+tail -> next = head
+head -> next = NULL
+Now we will return 5 -> 4 -> 3 -> 2 -> 1 -> null 
+
+*/
+node *reverse_linked_list_rec(node *head){
+    if(head == NULL || head -> next == NULL){
+        return head;
+    }
+    
+    node *small = reverse_linked_list_rec(head -> next);
+    node *tail = head -> next;
+    tail -> next = head;
+    head -> next = NULL;
+    return small;
+}
 
 //CLASS DEFINITION AND MAIN
 // Reverse Linked List  a. Using recursion  b. Without using recursion
