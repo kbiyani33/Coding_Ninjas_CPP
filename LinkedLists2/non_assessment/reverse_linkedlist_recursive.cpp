@@ -1,4 +1,6 @@
-node *reverse_linked_list_rec(node *head)
+//ALGORITHM 1 - O(n^2) solution 			- 			VERY VERY BAD THAT JUST TO REVERSE WE ARE TO USE 0(n^2)
+
+node *reverse_linked_list_rec1(node *head)
 {
     //write your recursive code here
     node *temp = head;
@@ -18,6 +20,50 @@ node *reverse_linked_list_rec(node *head)
     
     
 }
+
+//ALGORITHM 2 : Let's have a better solution as described below. It's also known as Double Pointer Algorithm.
+
+//Let's write a better solution and try and get it in O(n). 
+//The idea is that instead of traversing to tail everytime, I'll return both head and tail.
+class Pair{
+    public:
+    node *head;
+    node *tail;
+    
+};
+
+/*We have to return the object to the above defined class. 
+If we ever want to return multiple values, return object of the class with al the values.
+So, the new function I have to make is such that it returns the pair object
+
+//This will have Time Complexity 0(n)
+*/
+
+Pair reverse_better(node *head){
+    //return type is pair
+    if(head == NULL || head -> next == NULL){
+        Pair result;
+        result.head = head;
+        result.tail = head;
+        
+        return result;
+    }
+    
+    Pair smallans = reverse_better(head -> next);
+    smallans.tail ->next = head;
+    head -> next = NULL;
+    Pair finalans;
+    finalans.head = smallans.head;
+    finalans.tail = head;
+    return finalans;
+}
+
+
+node* reverse_linked_list_rec(node* head){
+    return reverse_better(head).head;
+}
+
+
 
 //CLASS DEFINITION AND MAIN
 // Reverse Linked List  a. Using recursion  b. Without using recursion
