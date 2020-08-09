@@ -8,7 +8,7 @@ node *reverse_linked_list_rec1(node *head)
         return temp;
     }
     
-    node * newHead = reverse_linked_list_rec(temp -> next);
+    node * newHead = reverse_linked_list_rec1(temp -> next);
     temp -> next =NULL;
     node *tail = newHead;
     while(tail ->next != NULL){
@@ -60,7 +60,7 @@ Pair reverse_better(node *head){
 }
 
 
-node* reverse_linked_list_rec(node* head){
+node* reverse_linked_list_rec2(node* head){
     return reverse_better(head).head;
 }
 
@@ -83,12 +83,12 @@ head -> next = NULL
 Now we will return 5 -> 4 -> 3 -> 2 -> 1 -> null 
 
 */
-node *reverse_linked_list_rec(node *head){
+node *reverse_linked_list_rec3(node *head){
     if(head == NULL || head -> next == NULL){
         return head;
     }
     
-    node *small = reverse_linked_list_rec(head -> next);
+    node *small = reverse_linked_list_rec3(head -> next);
     node *tail = head -> next;
     tail -> next = head;
     head -> next = NULL;
