@@ -1,4 +1,7 @@
 //Dynamic Push in stack similar to Dynamic array
+//IMPORTANT W.R.T CHAR TEMPLATE STACK
+//If we pass an integer after passing the stack to be char, it will treat the ineger values as ASCII Coded values.
+
 #include<iostream>
 using namespace std;
 template<typename t>
