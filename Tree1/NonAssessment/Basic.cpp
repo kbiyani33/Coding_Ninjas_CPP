@@ -70,7 +70,35 @@ Node<int>* takeInput(){
     }
     return newNode ;
 }
-
+Node<int>* takeInputLevel(){
+    int d;
+    //In this, we will use queue
+    queue<Node<int>*> q;//because we not only want the data, we also want to attach it to the root.
+    cout << "ENTER DATA OF ROOT" << endl ;
+    cin >> d ;
+    Node<int>* root = new Node<int>(d) ;
+    q.push(root);
+    while(!q.empty()){
+        Node<int>* front = q.front();
+        q.pop();
+        cout <<"The number of children of "<<front -> data << endl;
+        int num;
+        cin >> num;
+        for(int i = 0; i<num; i++){
+            int currentchild;
+            cout <<"Enter "<< i <<"th child of " << front -> data << endl;
+            cin >> currentchild;
+            Node<int>* b = new Node<int>(currentchild); //We don't use static since it gets deallocated after getting out of the loop itself.
+            
+            (front -> child).push_back(b);
+            q.push(b);
+            
+        }
+        
+    }
+    return root;
+    
+}
 int main()
 {
     /*
