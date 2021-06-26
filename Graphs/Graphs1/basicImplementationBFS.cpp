@@ -60,6 +60,7 @@ int main() {
         delete[] edges[i];
     }
     delete[] edges;
+    delete[] visited;
     return 0;
 
     return 0;

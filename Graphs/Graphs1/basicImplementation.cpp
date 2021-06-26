@@ -73,11 +73,6 @@ void printGraphDFS(int** edges, int n, int startVertex, bool* visited){
 
 }
 
-void printGraphBFS(int **edges, int n, int currentVertex, bool *visited){
-    // Similar to in level order traversal, we will prevent using recursion. We use iterative approach.
-    
-}
-
 int main(){
     int n, e;
     cin >> n >> e;
