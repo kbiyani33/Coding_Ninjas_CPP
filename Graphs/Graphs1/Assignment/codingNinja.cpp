@@ -23,49 +23,92 @@ Sample Output 1:
 */
 #include <iostream>
 #include <vector>
+// #include<bits/stdc++.h>
 using namespace std;
 
-bool validPoint(int x, int y, int n, int m){
-    return (x>=0 && x <n && y>=0 && y<m);
-}
+bool bfs( vector< vector<char> > &board , int n , int m ,int ci , int cj,vector< vector<bool> >&visited,string s)
+{
+    if(s.size()==0)
+    {
+        return true;
+    }
+    visited[ci][cj]=true;
 
-bool DFS(vector< vector<char> > &board, vector< vector<bool> > &used, string &word, int x, int y, int nextIndex, int n, int m){
-    if(nextIndex == 1) return true;
-    used[x][y] = true; // Marking as visited
 
-    bool found = false;
-
-    int dxdy[8][2] = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
-
-    for(int i=0; i<8; i++){
-        int newX = x + dxdy[i][0];
-        int newY = y + dxdy[i][1];
-
-        if(validPoint(newX, newY, n, m) && board[newX][newY] == word[nextIndex] && !used[newX][newY])
-            found = found | DFS(board, used, word, newX, newY, nextIndex+1, n, m);
+    bool ans = false;
+    if(ci+1<n && !visited[ci+1][cj] && board[ci+1][cj]==s[0])// down
+    {
+        if( bfs(board,n,m,ci+1,cj,visited, s.substr(1)))
+            return true;
     }
 
-    used[x][y] = false;
-    return found;
+    if(ci-1>=0 && !visited[ci-1][cj] && board[ci-1][cj]==s[0])// up
 
+    {
+        if(  	bfs(board,n,m,ci-1,cj,visited, s.substr(1)))
+            return true;
+    }
+    if(cj-1>=0 && !visited[ci][cj-1] && board[ci][cj-1]==s[0])// left
+    {
+        if( bfs(board,n,m,ci,cj-1,visited, s.substr(1)))
+            return true;
+    }
+
+    if(cj+1<m && !visited[ci][cj+1] && board[ci][cj+1]==s[0])// right
+    {
+        if( bfs(board,n,m,ci,cj+1,visited, s.substr(1)))
+            return true;
+    }
+
+
+    if(ci+1<n && cj-1>=0&&!visited[ci+1][cj-1] && board[ci+1][cj-1]==s[0])// down left
+    {
+        if( bfs(board,n,m,ci+1,cj-1,visited, s.substr(1)))
+            return true;
+    }
+
+    if(ci+1<n && cj+1<m&&!visited[ci+1][cj+1] && board[ci+1][cj+1]==s[0])// down right
+    {
+        if( bfs(board,n,m,ci+1,cj+1,visited, s.substr(1)))
+            return true;
+    }
+
+
+    if(ci-1>=0 && cj-1>=0 && !visited[ci-1][cj-1] && board[ci-1][cj-1]==s[0])// up left 
+    {
+        if( bfs(board,n,m,ci-1,cj-1,visited, s.substr(1)))
+            return true;
+    }
+
+    if(ci-1>=0 && cj+1<m&& !visited[ci-1][cj+1] && board[ci-1][cj+1]==s[0])// up right
+    {
+        if(	 bfs(board,n,m,ci-1,cj+1,visited, s.substr(1)))
+            return true;
+    }
+    
+ 	visited[ci][cj]=false;
+
+    return ans;
 }
 
-bool hasPath(vector< vector<char> > board, int n, int m){
-    // This function will return if we have a coding ninja path of not.
-    string word = "CODINGNINJA";
-    bool foundPath = false;
-    vector< vector<bool> > used(n, vector<bool> (m, false)); // This will create a n*m vector
-    for(int i=0; i<n; i++){
-        for(int j=0; j<m; j++){
-            if(board[i][j] == word[0]){
-                foundPath = DFS(board, used, word, i, j, 1, n, m);
-                if(foundPath)
-                    break;
-            }
+bool hasPath(vector< vector<char> > &board, int n, int m) {
+vector<vector<bool> >visited(n,vector<bool>(m, false));
+    for(int i=0; i<n ; i++)
+    {    for(int j=0 ; j< m; j++)
+    {
+        if(board[i][j]=='C')
+        {
+            
+            string s ="ODINGNINJA";
+       
+            if(bfs(board, n,m,i,j,visited,s))
+                return true;
+
         }
-        if(foundPath) break;
     }
-    return foundPath;
+    }
+    return false;
+
 }
 
 int main() {
