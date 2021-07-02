@@ -26,89 +26,45 @@ Sample Output 1:
 // #include<bits/stdc++.h>
 using namespace std;
 
-bool bfs( vector< vector<char> > &board , int n , int m ,int ci , int cj,vector< vector<bool> >&visited,string s)
-{
-    if(s.size()==0)
-    {
-        return true;
-    }
-    visited[ci][cj]=true;
-
-
-    bool ans = false;
-    if(ci+1<n && !visited[ci+1][cj] && board[ci+1][cj]==s[0])// down
-    {
-        if( bfs(board,n,m,ci+1,cj,visited, s.substr(1)))
-            return true;
-    }
-
-    if(ci-1>=0 && !visited[ci-1][cj] && board[ci-1][cj]==s[0])// up
-
-    {
-        if(  	bfs(board,n,m,ci-1,cj,visited, s.substr(1)))
-            return true;
-    }
-    if(cj-1>=0 && !visited[ci][cj-1] && board[ci][cj-1]==s[0])// left
-    {
-        if( bfs(board,n,m,ci,cj-1,visited, s.substr(1)))
-            return true;
-    }
-
-    if(cj+1<m && !visited[ci][cj+1] && board[ci][cj+1]==s[0])// right
-    {
-        if( bfs(board,n,m,ci,cj+1,visited, s.substr(1)))
-            return true;
-    }
-
-
-    if(ci+1<n && cj-1>=0&&!visited[ci+1][cj-1] && board[ci+1][cj-1]==s[0])// down left
-    {
-        if( bfs(board,n,m,ci+1,cj-1,visited, s.substr(1)))
-            return true;
-    }
-
-    if(ci+1<n && cj+1<m&&!visited[ci+1][cj+1] && board[ci+1][cj+1]==s[0])// down right
-    {
-        if( bfs(board,n,m,ci+1,cj+1,visited, s.substr(1)))
-            return true;
-    }
-
-
-    if(ci-1>=0 && cj-1>=0 && !visited[ci-1][cj-1] && board[ci-1][cj-1]==s[0])// up left 
-    {
-        if( bfs(board,n,m,ci-1,cj-1,visited, s.substr(1)))
-            return true;
-    }
-
-    if(ci-1>=0 && cj+1<m&& !visited[ci-1][cj+1] && board[ci-1][cj+1]==s[0])// up right
-    {
-        if(	 bfs(board,n,m,ci-1,cj+1,visited, s.substr(1)))
-            return true;
-    }
-    
- 	visited[ci][cj]=false;
-
-    return ans;
+bool validPoint(int x, int y, int n, int m){
+    return x >=0 && x < n && y >=0 && y < m;
 }
 
-bool hasPath(vector< vector<char> > &board, int n, int m) {
-vector<vector<bool> >visited(n,vector<bool>(m, false));
-    for(int i=0; i<n ; i++)
-    {    for(int j=0 ; j< m; j++)
-    {
-        if(board[i][j]=='C')
-        {
-            
-            string s ="ODINGNINJA";
-       
-            if(bfs(board, n,m,i,j,visited,s))
-                return true;
+bool pathFound(vector< vector<char> > &board, vector< vector<bool> > &visited, 
+int x, int y, int n, int m, string word, int nextIndex){
+    if(nextIndex == 11)
+        return true;
+    visited[x][y] = true;
+    bool finalAns = false;
+    int dxdy[8][2] = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
+    for(int i=0; i<8; i++){
+        int newX = x + dxdy[i][0];
+        int newY = y + dxdy[i][1];
 
+        if(validPoint(newX, newY, n, m) && !visited[newX][newY] && board[newX][newY] == word[nextIndex]){
+            finalAns = finalAns || pathFound(board, visited, newX, newY, n, m, word, nextIndex+1);
         }
     }
-    }
-    return false;
+    visited[x][y] = false;
+    return finalAns;
+}
 
+bool hasPath(vector< vector<char> > &board, int n, int m){
+    vector< vector<bool> > visited(n, vector<bool>(m, false)); // This will make an n/m vector of all false
+    string word = "CODINGNINJA";
+    bool hasPathVar = false;
+    for(int i=0; i<n; i++){
+        for(int j=0; j<m; j++){
+            if(board[i][j] == word[0]){
+                hasPathVar = pathFound(board, visited, i, j, n, m, word, 1);
+            }
+            if(hasPathVar)
+                break;
+        }
+        if(hasPathVar)
+            break;
+    }
+    return hasPathVar;
 }
 
 int main() {
