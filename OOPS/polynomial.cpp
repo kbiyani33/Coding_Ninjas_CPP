@@ -1,3 +1,7 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
 class Polynomial {
     int *degCoeff;// Name of your array (Don't change this)
     int capacity;
@@ -10,7 +14,7 @@ class Polynomial {
     Polynomial(){
         degCoeff=new int(5);
         for(int i=0;i<5;i++){
-            defCoeff[i]=0;
+            degCoeff[i]=0;
         }
         next=0;
         capacity=5;
@@ -18,26 +22,26 @@ class Polynomial {
     
     void print(){
         for(int i=0;i<next;i++){
-            if(DegCoeff[i]!=0){
-                cout<<DegCoeff[i]<<"x"<<i;
+            if(degCoeff[i]!=0){
+                cout<<degCoeff[i]<<"x"<<i;
             }
         }
         cout<<endl;
     }
     
     Polynomial(Polynomial const &p2){
-        this -> DegCoeff = new int(p2.capacity);
+        this -> degCoeff = new int(p2.capacity);
         for(int i=0;i<p2.next;i++){
-            this -> DegCoeff[i]=p2.DegCoeff[i];
+            this -> degCoeff[i]=p2.degCoeff[i];
         }
         this -> capacity=p2.capacity;
         this -> next=p2.next;
     }
     
     void operator=(Polynomial const &p2){
-        this -> DegCoeff = new int(p2.capacity);
+        this -> degCoeff = new int(p2.capacity);
         for(int i=0;i<p2.next;i++){
-            this -> DegCoeff[i]=p2.DegCoeff[i];
+            this -> degCoeff[i]=p2.degCoeff[i];
         }
         this -> capacity=p2.capacity;
         this -> next=p2.next;

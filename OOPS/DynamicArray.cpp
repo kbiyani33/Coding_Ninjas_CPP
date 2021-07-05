@@ -1,4 +1,5 @@
-#include <iostream>
+#include<iostream>
+#include<vector>
 using namespace std;
 
 //Let's make a dynamic array using class
